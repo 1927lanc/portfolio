@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lancy J — Full Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0a0b0d;
+  --ink2:#14161a;
+  --paper:#f5f3ee;
+  --paper2:#ede9e1;
+  --paper3:#e2ddd4;
+  --red:#c8341a;
+  --red2:#e03d20;
+  --red-pale:#fdf1ee;
+  --text:#1a1c20;
+  --text2:#4a4d56;
+  --text3:#8a8d96;
+  --syne:'Syne',sans-serif;
+  --mono:'DM Mono',monospace;
+  --sans:'DM Sans',sans-serif;
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--text);
+  font-family:var(--sans);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--red)}
+a{text-decoration:none;color:inherit}
+img{display:block}
+
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;opacity:0.5;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 5%;
+  background:rgba(245,243,238,0.88);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--paper3);
+}
+.logo{
+  font-family:var(--syne);font-size:1.1rem;font-weight:800;
+  letter-spacing:-0.02em;
+  display:flex;align-items:center;gap:6px;
+}
+.logo-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--red);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:0.6}}
+.nav-links{display:flex;gap:2.2rem;list-style:none}
+.nav-links a{
+  font-family:var(--mono);font-size:0.72rem;
+  color:var(--text3);letter-spacing:0.04em;
+  transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{
+  font-family:var(--mono);font-size:0.72rem;
+  background:var(--ink);color:var(--paper);
+  padding:0.5rem 1.2rem;border-radius:6px;
+  letter-spacing:0.04em;transition:background 0.2s;
+}
+.nav-cta:hover{background:var(--red)}
+
+/* HERO */
+#hero{
+  min-height:100vh;
+  padding:8rem 5% 5rem;
+  display:grid;
+  grid-template-columns:1fr 420px;
+  gap:6rem;
+  align-items:center;
+  max-width:1200px;margin:0 auto;
+}
+.hero-status{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:0.68rem;
+  color:var(--text3);letter-spacing:0.08em;
+  border:1px solid var(--paper3);
+  padding:0.35rem 1rem;border-radius:100px;
+  margin-bottom:2.5rem;
+  background:var(--paper2);
+}
+.hero-status .blink{
+  width:6px;height:6px;border-radius:50%;
+  background:#22c55e;
+  animation:pulse 2s infinite;
+}
+.hero-h1{
+  font-family:var(--syne);
+  font-size:clamp(3rem,6vw,5.2rem);
+  font-weight:800;
+  letter-spacing:-0.04em;
+  line-height:1.0;
+  color:var(--ink);
+  margin-bottom:1.8rem;
+}
+.hero-h1 .red{color:var(--red)}
+.hero-h1 .wave{display:inline-block;animation:wave 2.5s ease-in-out infinite;transform-origin:70% 70%}
+@keyframes wave{0%,100%{transform:rotate(0deg)}20%{transform:rotate(-15deg)}40%{transform:rotate(10deg)}60%{transform:rotate(-5deg)}80%{transform:rotate(8deg)}}
+.hero-sub{
+  font-size:1rem;color:var(--text2);
+  line-height:1.85;max-width:520px;
+  margin-bottom:3rem;
+}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3.5rem}
+.btn-primary{
+  font-family:var(--syne);font-size:0.85rem;font-weight:700;
+  background:var(--ink);color:var(--paper);
+  padding:0.9rem 2rem;border-radius:8px;
+  letter-spacing:-0.01em;
+  transition:all 0.25s;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary:hover{background:var(--red);transform:translateY(-2px)}
+.btn-secondary{
+  font-family:var(--syne);font-size:0.85rem;font-weight:600;
+  background:transparent;color:var(--text);
+  padding:0.9rem 2rem;border-radius:8px;
+  border:1.5px solid var(--paper3);
+  letter-spacing:-0.01em;
+  transition:all 0.25s;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.btn-secondary:hover{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.hero-links{display:flex;gap:2rem;flex-wrap:wrap}
+.hero-links a{
+  font-family:var(--mono);font-size:0.72rem;
+  color:var(--text3);letter-spacing:0.04em;
+  display:flex;align-items:center;gap:6px;
+  transition:color 0.2s;
+  border-bottom:1px solid transparent;
+  padding-bottom:2px;
+}
+.hero-links a:hover{color:var(--red);border-bottom-color:var(--red)}
+
+/* HERO CARD */
+.hero-card{
+  background:var(--ink);
+  border-radius:20px;
+  overflow:hidden;
+}
+.hc-photo{
+  height:260px;
+  background:linear-gradient(145deg,#1a1c20,#2a1a16);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.hc-photo::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 50%,var(--ink));
+  pointer-events:none;
+}
+.hc-photo img{
+  width:100%;height:100%;object-fit:cover;object-position:top;
+}
+.ph-fallback{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:10px;
+  width:100%;height:100%;
+}
+.ph-init{
+  font-family:var(--syne);font-size:4.5rem;font-weight:800;
+  color:var(--paper);opacity:0.12;letter-spacing:-0.05em;
+}
+.ph-hint{
+  font-family:var(--mono);font-size:0.65rem;color:#444;
+  text-align:center;line-height:1.5;
+  position:absolute;bottom:14px;left:14px;z-index:2;
+}
+.hc-body{padding:1.8rem}
+.hc-name{
+  font-family:var(--syne);font-size:1.4rem;font-weight:800;
+  color:var(--paper);letter-spacing:-0.02em;margin-bottom:0.2rem;
+}
+.hc-role{font-family:var(--mono);font-size:0.72rem;color:#666;margin-bottom:1.2rem}
+.hc-stats{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:1.5rem}
+.hc-stat{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:10px;padding:0.9rem;
+}
+.hc-stat-n{
+  font-family:var(--syne);font-size:1.5rem;font-weight:700;
+  color:var(--paper);margin-bottom:2px;
+}
+.hc-stat-l{font-family:var(--mono);font-size:0.65rem;color:#555}
+.hc-tags{display:flex;flex-wrap:wrap;gap:0.45rem}
+.hc-tag{
+  font-family:var(--mono);font-size:0.65rem;
+  background:rgba(200,52,26,0.15);
+  border:1px solid rgba(200,52,26,0.25);
+  color:#e07060;padding:0.25rem 0.65rem;border-radius:5px;
+}
+
+/* SECTIONS */
+.sec{padding:7rem 5%}
+.sec-inner{max-width:1100px;margin:0 auto}
+.sec-label{
+  font-family:var(--mono);font-size:0.68rem;
+  color:var(--red);letter-spacing:0.12em;
+  text-transform:uppercase;
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:1rem;
+}
+.sec-label::before{
+  content:'';flex:1;max-width:40px;
+  height:1px;background:var(--red);
+}
+.sec-title{
+  font-family:var(--syne);
+  font-size:clamp(2rem,4vw,3rem);
+  font-weight:800;letter-spacing:-0.04em;
+  color:var(--ink);line-height:1.1;
+}
+.sec-head{margin-bottom:4rem}
+
+/* ABOUT */
+#about{background:var(--ink)}
+#about .sec-label{color:#c87060}
+#about .sec-label::before{background:#c87060}
+#about .sec-title{color:var(--paper)}
+.about-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:5rem;align-items:start}
+.about-text p{font-size:0.95rem;color:#9a9da8;line-height:1.95;margin-bottom:1.2rem}
+.about-text p strong{color:var(--paper)}
+.about-pills{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:2rem}
+.about-pill{
+  font-family:var(--mono);font-size:0.7rem;
+  color:#888;border:1px solid #2a2d35;
+  padding:0.35rem 0.9rem;border-radius:100px;
+  transition:all 0.2s;cursor:default;
+}
+.about-pill:hover{border-color:#c87060;color:#c87060}
+.about-boxes{display:flex;flex-direction:column;gap:1rem}
+.abox{
+  border:1px solid #1e2128;
+  border-radius:14px;padding:1.6rem;
+  transition:border-color 0.2s;
+  background:rgba(255,255,255,0.02);
+}
+.abox:hover{border-color:#2e3140}
+.abox-icon{font-size:1.6rem;margin-bottom:0.8rem}
+.abox-t{font-family:var(--syne);font-size:0.9rem;font-weight:700;color:var(--paper);margin-bottom:0.4rem}
+.abox-d{font-size:0.83rem;color:#666;line-height:1.7}
+.abox-d strong{color:#c87060}
+
+/* SKILLS */
+#skills{background:var(--paper)}
+.sk-wrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+.sk-card{
+  border:1px solid var(--paper3);
+  border-radius:14px;padding:1.8rem;
+  background:var(--paper2);
+  transition:all 0.25s;cursor:default;
+}
+.sk-card:hover{
+  background:#fff;
+  box-shadow:0 12px 40px rgba(0,0,0,0.08);
+  transform:translateY(-4px);
+}
+.sk-header{display:flex;align-items:center;gap:12px;margin-bottom:1.4rem}
+.sk-ico{
+  width:44px;height:44px;
+  background:var(--ink);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+}
+.sk-nm{font-family:var(--syne);font-size:0.95rem;font-weight:700}
+.sk-tags{display:flex;flex-wrap:wrap;gap:0.4rem}
+.sk-tag{
+  font-family:var(--mono);font-size:0.68rem;
+  color:var(--text2);
+  border:1px solid var(--paper3);
+  background:var(--paper);
+  padding:0.28rem 0.7rem;border-radius:6px;
+  transition:all 0.2s;
+}
+.sk-tag:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.sk-card.learning{
+  background:linear-gradient(135deg,var(--red-pale),#fff8f6);
+  border-color:rgba(200,52,26,0.15);
+}
+.sk-card.learning .sk-ico{background:var(--red)}
+.sk-card.learning .sk-tag{
+  border-color:rgba(200,52,26,0.2);color:var(--red);
+  background:rgba(200,52,26,0.05);
+}
+
+/* EXPERIENCE */
+#experience{background:var(--ink)}
+#experience .sec-label{color:#c87060}
+#experience .sec-label::before{background:#c87060}
+#experience .sec-title{color:var(--paper)}
+.exp-timeline{display:flex;flex-direction:column}
+.exp-item{
+  display:grid;grid-template-columns:160px 1fr;
+  gap:2rem;padding:2.5rem 0;
+  border-bottom:1px solid #1a1d24;
+}
+.exp-item:last-child{border-bottom:none}
+.exp-period-col{
+  font-family:var(--mono);font-size:0.68rem;
+  color:#555;letter-spacing:0.04em;padding-top:4px;
+}
+.exp-period-col .now{color:var(--red2);display:block;margin-top:4px}
+.exp-role{
+  font-family:var(--syne);font-size:1.1rem;font-weight:700;
+  color:var(--paper);margin-bottom:0.3rem;letter-spacing:-0.02em;
+}
+.exp-org{
+  font-family:var(--mono);font-size:0.72rem;color:#888;
+  margin-bottom:0.8rem;display:flex;align-items:center;gap:8px;
+}
+.exp-org .sep{color:#333}
+.exp-desc{font-size:0.88rem;color:#7a7d88;line-height:1.8;margin-bottom:1.2rem}
+.exp-chips{display:flex;flex-wrap:wrap;gap:0.4rem}
+.exp-chip{
+  font-family:var(--mono);font-size:0.65rem;
+  color:#555;background:rgba(255,255,255,0.04);
+  border:1px solid #232630;
+  padding:0.2rem 0.6rem;border-radius:5px;
+}
+
+/* EDUCATION */
+#education{background:var(--paper)}
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.edu-card{
+  border:1px solid var(--paper3);border-radius:14px;
+  padding:2rem;background:var(--paper2);
+  position:relative;overflow:hidden;transition:all 0.25s;
+}
+.edu-card:hover{box-shadow:0 12px 40px rgba(0,0,0,0.06);transform:translateY(-3px);background:#fff}
+.edu-accent{position:absolute;top:0;left:0;width:3px;height:100%;background:var(--ink)}
+.edu-year{font-family:var(--mono);font-size:0.68rem;color:var(--text3);margin-bottom:0.6rem}
+.edu-deg{font-family:var(--syne);font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:0.3rem;letter-spacing:-0.02em}
+.edu-inst{font-size:0.83rem;color:var(--text2)}
+.edu-switch{
+  background:var(--ink);border-radius:14px;padding:2rem;
+  display:flex;align-items:flex-start;gap:1.2rem;
+}
+.es-icon{font-size:1.6rem;flex-shrink:0}
+.es-text{font-size:0.88rem;color:#9a9da8;line-height:1.8}
+.es-text strong{color:var(--paper)}
+
+/* PROJECTS */
+#projects{background:var(--paper2)}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.2rem}
+.proj-card{
+  background:var(--paper);
+  border:1px solid var(--paper3);
+  border-radius:16px;overflow:hidden;
+  display:flex;flex-direction:column;transition:all 0.3s;
+}
+.proj-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 60px rgba(0,0,0,0.1);
+}
+.proj-thumb{
+  height:200px;overflow:hidden;position:relative;
+  background:var(--ink);
+  display:flex;align-items:center;justify-content:center;
+}
+.proj-thumb img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.5s}
+.proj-card:hover .proj-thumb img{transform:scale(1.06)}
+.proj-fallback{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:8px;width:100%;height:100%;
+}
+.proj-fallback .fb-em{font-size:3rem}
+.proj-fallback .fb-url{font-family:var(--mono);font-size:0.65rem;color:#555}
+.proj-live-badge{
+  position:absolute;top:12px;left:12px;
+  font-family:var(--mono);font-size:0.62rem;font-weight:500;
+  background:var(--red);color:#fff;
+  padding:0.22rem 0.65rem;border-radius:4px;
+  display:flex;align-items:center;gap:5px;
+}
+.proj-live-badge::before{
+  content:'';width:5px;height:5px;border-radius:50%;
+  background:#fff;animation:pulse 1.5s infinite;
+}
+.proj-body{padding:1.8rem;flex:1;display:flex;flex-direction:column}
+.proj-name{
+  font-family:var(--syne);font-size:1.1rem;font-weight:700;
+  letter-spacing:-0.02em;color:var(--ink);margin-bottom:0.6rem;
+}
+.proj-desc{font-size:0.83rem;color:var(--text2);line-height:1.75;flex:1;margin-bottom:1.2rem}
+.proj-stack{display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:1.4rem}
+.proj-tag{
+  font-family:var(--mono);font-size:0.62rem;
+  color:var(--text3);background:var(--paper2);
+  border:1px solid var(--paper3);
+  padding:0.2rem 0.55rem;border-radius:5px;
+}
+.proj-actions{display:flex;gap:0.7rem}
+.pa-live{
+  font-family:var(--syne);font-size:0.78rem;font-weight:700;
+  background:var(--ink);color:var(--paper);
+  padding:0.5rem 1.1rem;border-radius:7px;
+  transition:all 0.2s;display:inline-flex;align-items:center;gap:6px;
+}
+.pa-live:hover{background:var(--red)}
+.pa-gh{
+  font-family:var(--syne);font-size:0.78rem;font-weight:600;
+  background:transparent;color:var(--text);
+  padding:0.5rem 1.1rem;border-radius:7px;
+  border:1.5px solid var(--paper3);
+  transition:all 0.2s;display:inline-flex;align-items:center;gap:6px;
+}
+.pa-gh:hover{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+
+/* CONTACT */
+#contact{background:var(--ink)}
+#contact .sec-label{color:#c87060}
+#contact .sec-label::before{background:#c87060}
+#contact .sec-title{color:var(--paper)}
+.contact-layout{display:grid;grid-template-columns:1fr 1.2fr;gap:6rem;align-items:start}
+.contact-headline{
+  font-family:var(--syne);font-size:1.1rem;font-weight:400;
+  color:#9a9da8;line-height:1.8;margin-bottom:2.5rem;max-width:420px;
+}
+.contact-headline strong{color:var(--paper)}
+.ci-list{display:flex;flex-direction:column}
+.ci{
+  display:flex;align-items:center;gap:1rem;
+  padding:1rem 0;border-bottom:1px solid #1a1d24;
+}
+.ci:last-child{border-bottom:none}
+.ci-icon{
+  width:40px;height:40px;border-radius:10px;
+  background:#1a1d24;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.9rem;flex-shrink:0;
+}
+.ci-lbl{font-family:var(--mono);font-size:0.65rem;color:#555;margin-bottom:2px}
+.ci-val{font-size:0.88rem;color:#9a9da8}
+.ci-val a{transition:color 0.2s}
+.ci-val a:hover{color:var(--paper)}
+.social-links{display:flex;gap:0.7rem;margin-top:2rem;flex-wrap:wrap}
+.sl{
+  font-family:var(--mono);font-size:0.68rem;
+  color:#666;background:#111418;
+  border:1px solid #1e2128;
+  padding:0.55rem 1.1rem;border-radius:8px;
+  transition:all 0.2s;display:inline-flex;align-items:center;gap:6px;
+}
+.sl:hover{border-color:#c87060;color:#c87060}
+.cf{
+  background:#0e1015;border:1px solid #1a1d24;
+  border-radius:16px;padding:2.2rem;
+}
+.cf-head{
+  font-family:var(--mono);font-size:0.68rem;
+  color:#555;margin-bottom:1.8rem;
+  padding-bottom:1.2rem;border-bottom:1px solid #1a1d24;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.cf-live{
+  display:flex;align-items:center;gap:6px;
+  font-size:0.62rem;color:#4ade80;
+}
+.cf-live::before{content:'';width:5px;height:5px;border-radius:50%;background:#4ade80;animation:pulse 2s infinite}
+.fg{margin-bottom:1.1rem}
+.fg label{
+  display:block;font-family:var(--mono);font-size:0.65rem;
+  color:#555;margin-bottom:0.5rem;letter-spacing:0.04em;
+}
+.fg input,.fg textarea{
+  width:100%;
+  background:#111418;border:1.5px solid #1e2128;
+  border-radius:9px;padding:0.85rem 1rem;
+  color:var(--paper);
+  font-family:var(--sans);font-size:0.87rem;
+  outline:none;transition:border-color 0.2s;resize:none;
+}
+.fg input::placeholder,.fg textarea::placeholder{color:#3a3d48}
+.fg input:focus,.fg textarea:focus{border-color:rgba(200,52,26,0.5)}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.cf-btn{
+  width:100%;padding:1rem;
+  background:var(--red);color:#fff;
+  border:none;border-radius:9px;
+  font-family:var(--syne);font-size:0.9rem;font-weight:700;
+  letter-spacing:-0.01em;cursor:pointer;transition:all 0.25s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.cf-btn:hover{background:#e03d20;transform:translateY(-2px);box-shadow:0 8px 28px rgba(200,52,26,0.35)}
+
+/* FOOTER */
+footer{
+  background:#080a0d;border-top:1px solid #0f1115;
+  padding:2rem 5%;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+}
+.fl{font-family:var(--mono);font-size:0.7rem;color:#333}
+.fl span{color:#c87060}
+.fr{display:flex;gap:1.8rem}
+.fr a{font-family:var(--mono);font-size:0.68rem;color:#333;transition:color 0.2s}
+.fr a:hover{color:#c87060}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease}
+.rv.in{opacity:1;transform:translateY(0)}
+.rv-d1{transition-delay:0.1s}
+.rv-d2{transition-delay:0.2s}
+.rv-d3{transition-delay:0.3s}
+
+@media(max-width:900px){
+  #hero{grid-template-columns:1fr;gap:3rem;padding-top:7rem}
+  .hero-r{order:-1}
+  .about-grid,.contact-layout{grid-template-columns:1fr}
+  .edu-grid{grid-template-columns:1fr}
+  .exp-item{grid-template-columns:1fr;gap:0.5rem}
+  .fg-row{grid-template-columns:1fr}
+  .nav-links,.nav-cta{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <span class="logo-dot"></span>
+    Lancy<span style="opacity:0.3">/</span>dev
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">about</a></li>
+    <li><a href="#skills">skills</a></li>
+    <li><a href="#experience">experience</a></li>
+    <li><a href="#projects">projects</a></li>
+    <li><a href="#contact">contact</a></li>
+  </ul>
+  <a href="mailto:1927lanc@gmail.com" class="nav-cta">hire_me()</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-l rv">
+    <div class="hero-status">
+      <span class="blink"></span>
+      available &middot; open to work &middot; Chennai
+    </div>
+    <h1 class="hero-h1">
+      Hi, I'm<br>
+      <span class="red">Lancy</span> <span class="wave">&#x1F44B;</span>
+    </h1>
+    <p class="hero-sub">
+      Full Stack Developer building with <strong>Python, Django &amp; React</strong>. Switched from Agriculture to tech out of pure passion. Aspiring <strong>AI/ML Engineer</strong> on a mission to build things that matter.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">See My Work &rarr;</a>
+      <a href="#contact" class="btn-secondary">Get In Touch</a>
+    </div>
+    <div class="hero-links">
+      <a href="https://github.com/1927lanc" target="_blank">&#x1F419; github.com/1927lanc</a>
+      <a href="https://www.linkedin.com/in/lancy-j-506a42392/" target="_blank">&#x1F4BC; LinkedIn</a>
+      <a href="mailto:1927lanc@gmail.com">&#x2709;&#xFE0F; Email</a>
+    </div>
+  </div>
+
+  <div class="hero-r rv rv-d2">
+    <div class="hero-card">
+      <div class="hc-photo">
+        <!-- Save your photo as photo.jpg in the same folder — it'll show automatically -->
+        <img
+          src="photo.jpg"
+          alt="Lancy"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        />
+        <div class="ph-fallback" style="display:none">
+          <div class="ph-init">LJ</div>
+          <div class="ph-hint">add photo.jpg to show your photo</div>
+        </div>
+      </div>
+      <div class="hc-body">
+        <div class="hc-name">Lancy J</div>
+        <div class="hc-role">// full-stack developer &middot; Chennai, India</div>
+        <div class="hc-stats">
+          <div class="hc-stat">
+            <div class="hc-stat-n">2+</div>
+            <div class="hc-stat-l">live projects</div>
+          </div>
+          <div class="hc-stat">
+            <div class="hc-stat-n">10+</div>
+            <div class="hc-stat-l">technologies</div>
+          </div>
+          <div class="hc-stat">
+            <div class="hc-stat-n">6mo+</div>
+            <div class="hc-stat-l">training</div>
+          </div>
+          <div class="hc-stat">
+            <div class="hc-stat-n">&infin;</div>
+            <div class="hc-stat-l">passion for code</div>
+          </div>
+        </div>
+        <div class="hc-tags">
+          <span class="hc-tag">Python</span>
+          <span class="hc-tag">React.js</span>
+          <span class="hc-tag">Django</span>
+          <span class="hc-tag">AWS</span>
+          <span class="hc-tag">Gen AI &nearr;</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="sec">
+  <div class="sec-inner">
+    <div class="sec-head rv">
+      <div class="sec-label">About Me</div>
+      <h2 class="sec-title">Who I am</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text rv">
+        <p>I'm a developer from <strong>Chennai, India</strong> who took the unconventional route — from an Agriculture degree to writing production-grade code. That switch wasn't accidental; it was driven by a passion I couldn't ignore.</p>
+        <p>Today, I build <strong>full-stack web applications</strong> using Python, Django and React. I care deeply about clean architecture, real user experiences, and code that's actually maintainable.</p>
+        <p>My goal is to grow into an <strong>AI/ML Engineer</strong> — I'm actively studying Generative AI and deep learning. I believe the next decade belongs to those who can bridge software engineering with intelligent systems.</p>
+        <div class="about-pills">
+          <span class="about-pill">continuous learner</span>
+          <span class="about-pill">open to collaboration</span>
+          <span class="about-pill">Tamil &amp; English</span>
+          <span class="about-pill">Chennai, India</span>
+          <span class="about-pill">remote-friendly</span>
+        </div>
+      </div>
+      <div class="about-boxes rv rv-d2">
+        <div class="abox">
+          <div class="abox-icon">&#x1F3AF;</div>
+          <div class="abox-t">Right Now</div>
+          <div class="abox-d">Building real-world full-stack apps. Seeking my <strong>first professional role</strong> — full-time, internship, or contract.</div>
+        </div>
+        <div class="abox">
+          <div class="abox-icon">&#x1F680;</div>
+          <div class="abox-t">Future Goal</div>
+          <div class="abox-d">Actively learning <strong>Generative AI</strong>. Planning to grow into an AI/ML Engineer who ships production models.</div>
+        </div>
+        <div class="abox">
+          <div class="abox-icon">&#x1F4A1;</div>
+          <div class="abox-t">What drives me</div>
+          <div class="abox-d">Turning complex problems into elegant solutions. I genuinely love the craft of <strong>building things from scratch</strong>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="sec">
+  <div class="sec-inner">
+    <div class="sec-head rv">
+      <div class="sec-label">Skills</div>
+      <h2 class="sec-title">What I work with</h2>
+    </div>
+    <div class="sk-wrap">
+      <div class="sk-card rv">
+        <div class="sk-header"><div class="sk-ico">&#x1F3A8;</div><div class="sk-nm">Frontend</div></div>
+        <div class="sk-tags">
+          <span class="sk-tag">HTML5</span><span class="sk-tag">CSS3</span>
+          <span class="sk-tag">JavaScript</span><span class="sk-tag">React.js</span>
+          <span class="sk-tag">Bootstrap</span><span class="sk-tag">Tailwind CSS</span>
+        </div>
+      </div>
+      <div class="sk-card rv rv-d1">
+        <div class="sk-header"><div class="sk-ico">&#x2699;&#xFE0F;</div><div class="sk-nm">Backend</div></div>
+        <div class="sk-tags">
+          <span class="sk-tag">Python</span><span class="sk-tag">Django</span>
+          <span class="sk-tag">DRF</span><span class="sk-tag">FastAPI</span>
+          <span class="sk-tag">Flask</span><span class="sk-tag">REST APIs</span>
+          <span class="sk-tag">JWT Auth</span>
+        </div>
+      </div>
+      <div class="sk-card rv rv-d2">
+        <div class="sk-header"><div class="sk-ico">&#x1F5C4;&#xFE0F;</div><div class="sk-nm">Database</div></div>
+        <div class="sk-tags">
+          <span class="sk-tag">PostgreSQL</span>
+          <span class="sk-tag">MySQL</span>
+          <span class="sk-tag">SQLite</span>
+        </div>
+      </div>
+      <div class="sk-card rv rv-d3">
+        <div class="sk-header"><div class="sk-ico">&#x2601;&#xFE0F;</div><div class="sk-nm">Cloud &amp; DevOps</div></div>
+        <div class="sk-tags">
+          <span class="sk-tag">AWS</span><span class="sk-tag">Docker</span>
+          <span class="sk-tag">Git</span><span class="sk-tag">GitHub</span>
+          <span class="sk-tag">Vercel</span><span class="sk-tag">Render</span>
+          <span class="sk-tag">Linux</span><span class="sk-tag">Cloudinary</span>
+        </div>
+      </div>
+      <div class="sk-card learning rv">
+        <div class="sk-header"><div class="sk-ico">&#x1F916;</div><div class="sk-nm">Currently Learning</div></div>
+        <div style="font-family:var(--mono);font-size:0.65rem;color:rgba(200,52,26,0.5);margin-bottom:0.9rem">// next chapter</div>
+        <div class="sk-tags">
+          <span class="sk-tag">Generative AI</span><span class="sk-tag">Machine Learning</span>
+          <span class="sk-tag">Deep Learning</span><span class="sk-tag">AI Engineering</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="sec">
+  <div class="sec-inner">
+    <div class="sec-head rv">
+      <div class="sec-label">Experience</div>
+      <h2 class="sec-title">My journey</h2>
+    </div>
+    <div class="exp-timeline">
+      <div class="exp-item rv">
+        <div class="exp-period-col">
+          Sep 2025<br>&darr;<br><span class="now">Present</span>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Full Stack Python Developer &mdash; Trainee</div>
+          <div class="exp-org">Uniq Technologies <span class="sep">&middot;</span> &#x1F4CD; Chennai, India</div>
+          <div class="exp-desc">Enrolled in an intensive hands-on full-stack Python development program. Built end-to-end real-world projects covering the complete development lifecycle — from designing REST APIs with Django to building React frontends and deploying to cloud platforms.</div>
+          <div class="exp-chips">
+            <span class="exp-chip">Django</span><span class="exp-chip">React.js</span>
+            <span class="exp-chip">PostgreSQL</span><span class="exp-chip">Docker</span>
+            <span class="exp-chip">AWS</span><span class="exp-chip">Vercel</span>
+          </div>
+        </div>
+      </div>
+      <div class="exp-item rv rv-d1">
+        <div class="exp-period-col">
+          2025<br>&darr;<br><span class="now">Present</span>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Fresher &mdash; Actively Looking for First Role</div>
+          <div class="exp-org">Open to Opportunities <span class="sep">&middot;</span> &#x1F4CD; Chennai, India</div>
+          <div class="exp-desc">Seeking my first role as a Full Stack or Python Developer. Already built and deployed 2 real projects — an e-commerce platform and an AI-powered image clustering dashboard. Ready to contribute from day one.</div>
+          <div class="exp-chips">
+            <span class="exp-chip">Full-Time</span><span class="exp-chip">Internship</span>
+            <span class="exp-chip">Remote</span><span class="exp-chip">On-site</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="sec">
+  <div class="sec-inner">
+    <div class="sec-head rv">
+      <div class="sec-label">Education</div>
+      <h2 class="sec-title">Academic background</h2>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card rv">
+        <div class="edu-accent"></div>
+        <div class="edu-year">Feb 2020 &ndash; Sep 2024</div>
+        <div class="edu-deg">B.Sc (Hons) Agriculture</div>
+        <div class="edu-inst">Don Bosco College of Agriculture, Tamil Nadu</div>
+      </div>
+      <div class="edu-card rv rv-d1">
+        <div class="edu-accent" style="background:var(--red)"></div>
+        <div class="edu-year">Sep 2025 &ndash; Present</div>
+        <div class="edu-deg">Full Stack Python Development</div>
+        <div class="edu-inst">Uniq Technologies, Chennai</div>
+      </div>
+    </div>
+    <div class="edu-switch rv">
+      <div class="es-icon">&#x1F500;</div>
+      <div class="es-text">
+        <strong>Why I switched:</strong> I always loved technology but followed a different path first. After completing my degree, I chose to follow my real passion. I believe switching domains is not a weakness — it shows courage and commitment to do what you truly love.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="sec">
+  <div class="sec-inner">
+    <div class="sec-head rv">
+      <div class="sec-label">Projects</div>
+      <h2 class="sec-title">Things I've built</h2>
+    </div>
+    <div class="proj-grid">
+
+      <div class="proj-card rv">
+        <div class="proj-thumb">
+          <!-- Save screenshot as soulcart.png in same folder as index.html -->
+          <img
+            src="soulcart.png"
+            alt="SoulCart"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          />
+          <div class="proj-fallback" style="display:none">
+            <div class="fb-em">&#x1F6D2;</div>
+            <div class="fb-url">soulcart-frontend.vercel.app</div>
+          </div>
+          <div class="proj-live-badge">LIVE</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">SoulCart &mdash; E-Commerce Platform</div>
+          <div class="proj-desc">A fully functional e-commerce platform built from scratch. 83+ products, cart, orders, wishlist, JWT authentication, product reviews, and Cloudinary image management. Fully deployed and live.</div>
+          <div class="proj-stack">
+            <span class="proj-tag">Django</span><span class="proj-tag">React.js</span>
+            <span class="proj-tag">PostgreSQL</span><span class="proj-tag">Cloudinary</span>
+            <span class="proj-tag">JWT</span><span class="proj-tag">Vercel</span>
+            <span class="proj-tag">Render</span>
+          </div>
+          <div class="proj-actions">
+            <a href="https://soulcart-frontend.vercel.app" target="_blank" class="pa-live">&#x1F310; Live Demo</a>
+            <a href="https://github.com/1927lanc/soulcart" target="_blank" class="pa-gh">&#x1F419; GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card rv rv-d2">
+        <div class="proj-thumb">
+          <!-- Save screenshot as clustering.png in same folder as index.html -->
+          <img
+            src="clustering.png"
+            alt="Visual Clustering Dashboard"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          />
+          <div class="proj-fallback" style="display:none;background:linear-gradient(135deg,#0a0a18,#14142e)">
+            <div class="fb-em">&#x1F916;</div>
+            <div class="fb-url">dinov2-smart-grouping</div>
+          </div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">Visual Clustering Dashboard</div>
+          <div class="proj-desc">An AI-powered image clustering tool using the DINOv2 deep learning model. Automatically groups images by visual similarity. Built with a FastAPI backend and React frontend.</div>
+          <div class="proj-stack">
+            <span class="proj-tag">DINOv2</span><span class="proj-tag">FastAPI</span>
+            <span class="proj-tag">React.js</span><span class="proj-tag">Python</span>
+            <span class="proj-tag">Deep Learning</span>
+          </div>
+          <div class="proj-actions">
+            <a href="https://github.com/1927lanc/dinov2-smart-grouping" target="_blank" class="pa-live">&#x1F419; View on GitHub</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="sec">
+  <div class="sec-inner">
+    <div class="sec-head rv">
+      <div class="sec-label">Contact</div>
+      <h2 class="sec-title">Let's talk</h2>
+    </div>
+    <div class="contact-layout">
+      <div class="rv">
+        <p class="contact-headline">
+          <strong>Open to full-time roles, internships, and collaborations.</strong> If you have an opportunity or just want to say hi &mdash; I'd love to hear from you. I reply to every message.
+        </p>
+        <div class="ci-list">
+          <div class="ci">
+            <div class="ci-icon">&#x2709;&#xFE0F;</div>
+            <div><div class="ci-lbl">email</div><div class="ci-val"><a href="mailto:1927lanc@gmail.com">1927lanc@gmail.com</a></div></div>
+          </div>
+          <div class="ci">
+            <div class="ci-icon">&#x1F4DE;</div>
+            <div><div class="ci-lbl">phone</div><div class="ci-val"><a href="tel:+916380216185">+91 63802 16185</a></div></div>
+          </div>
+          <div class="ci">
+            <div class="ci-icon">&#x1F4CD;</div>
+            <div><div class="ci-lbl">location</div><div class="ci-val">Chennai, Tamil Nadu, India</div></div>
+          </div>
+          <div class="ci">
+            <div class="ci-icon">&#x1F7E2;</div>
+            <div><div class="ci-lbl">status</div><div class="ci-val" style="color:#4ade80;font-weight:600">Open to Work</div></div>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="https://github.com/1927lanc" target="_blank" class="sl">&#x1F419; GitHub</a>
+          <a href="https://www.linkedin.com/in/lancy-j-506a42392/" target="_blank" class="sl">&#x1F4BC; LinkedIn</a>
+        </div>
+      </div>
+
+      <div class="rv rv-d2">
+        <div class="cf">
+          <div class="cf-head">
+            <span>// send_message.js</span>
+            <span class="cf-live">online</span>
+          </div>
+          <form onsubmit="sendIt(event)">
+            <div class="fg-row">
+              <div class="fg">
+                <label>YOUR NAME</label>
+                <input type="text" placeholder="John Doe" required>
+              </div>
+              <div class="fg">
+                <label>EMAIL ADDRESS</label>
+                <input type="email" placeholder="john@example.com" required>
+              </div>
+            </div>
+            <div class="fg">
+              <label>SUBJECT</label>
+              <input type="text" placeholder="Job opportunity / Project / Just saying hi">
+            </div>
+            <div class="fg">
+              <label>MESSAGE</label>
+              <textarea rows="5" placeholder="Hi Lancy, I'd like to..." required></textarea>
+            </div>
+            <button type="submit" class="cf-btn" id="cfbtn">Send Message &rarr;</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fl">&copy; 2026 <span>Lancy J</span> &middot; Made with &#x2764;&#xFE0F; in Chennai</div>
+  <div class="fr">
+    <a href="#about">about</a>
+    <a href="#skills">skills</a>
+    <a href="#projects">projects</a>
+    <a href="#contact">contact</a>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.07 });
+document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+const secs = document.querySelectorAll('section[id]');
+const navAs = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  secs.forEach(s => { if (window.scrollY >= s.offsetTop - 110) cur = s.id; });
+  navAs.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--text)' : '';
+  });
+}, { passive: true });
+
+function sendIt(e) {
+  e.preventDefault();
+  const btn = document.getElementById('cfbtn');
+  btn.textContent = '✅ Message Sent!';
+  btn.style.background = '#22c55e';
+  setTimeout(() => {
+    btn.textContent = 'Send Message →';
+    btn.style.background = '';
+    e.target.reset();
+  }, 3000);
+}
+</script>
+</body>
+</html>
